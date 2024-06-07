@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block bootstrap3_content %}
+  <div class="container">
+    <h1>{% block title %}(no title){% endblock %}</h1>
+    {% block content %}
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block bootstrap3_extra_script %}
+<script type="text/javascript" src="{% static 'core/js/login.js'%}" charset="UTF-8"></script>
+{% endblock %}

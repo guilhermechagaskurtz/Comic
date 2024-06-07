@@ -1,0 +1,10 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+
+{% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}
+{% block bootstrap3_extra_script %}
+    <script language="JavaScript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{% bootstrap_icon 'list-alt' %} Submissões edital:<br><small>{{ edital.descricao }}</small>
+{% endblock %}
+
+
+{% block content %}
+	<div class="panel panel-default">
+	  <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <a href="{{ edital.get_submissoes_aprovadas_list_url }}" class="btn btn-lg btn-success" style="width:100%;">Listar {{ edital.submissoes_aprovadas|length }} Aprovadas</a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <a href="{{ edital.get_submissoes_reprovadas_list_url }}" class="btn btn-lg btn-danger" style="width:100%;">Listar {{ edital.submissoes_reprovadas|length }} Reprovadas</a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <a href="{{ edital.get_submissoes_todas_list_url }}" class="btn btn-lg btn-primary" style="width:100%;">Listar {{ edital.submissoes|length }} Todas</a>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <p>Filtrando por submissões: <strong>{{ situacao|title }}</strong></p>
+            </div>
+        </div>
+	  </div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+	  		<thead>
+	  			<th>Título</th>
+	  			<th>Responsável</th>
+	  			<th>Colaboradores</th>	  			
+				<th>Local execução</th>
+				<th>Curso de graduação</th>
+				<th>Arquivo projeto inicial</th>
+				<th>Arquivo projeto corrigido</th>
+				<th>Arquivo parecer comissão</th>
+				<th>Arquivo parecer final</th>
+	  			<th class="text-center">Editar</th>
+	  			<th class="text-center">Excluir</th>
+	  		</thead>
+	  		<tbody>
+	  			{% for submissao in object_list %}
+					<tr>
+						<td>{{ submissao.titulo }}</td>
+						<td>
+							{{  submissao.responsavel|default_if_none:'' }}
+						</td>
+						<td>
+							{% for c in submissao.colaborador.all %}
+								{{ c }}
+								{% if forloop.last %}
+								.
+								{% else %}
+								,
+								{% endif %}
+							{% empty %}
+								<i>Nenhum colaborador informado</i>
+							{% endfor %}
+						</td>
+
+						<td>
+							{{ submissao.local_execucao|default_if_none:'' }}
+						</td>
+
+						<td>
+							{{ submissao.curso_graduacao_vinculado|default_if_none:'' }}
+						</td>
+						<td>
+							{% if submissao.arquivo_projeto %}
+								<a href="{{ submissao.arquivo_projeto.url }}" target="_blank" class="btn btn-sm btn-primary">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% else %}
+								<a href="" target="_blank" class="btn btn-sm btn-primary disabled">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% endif %}
+						</td>
+						<td>
+							{% if submissao.arquivo_atualizacao_pendencia_projeto %}
+								<a href="{{ submissao.arquivo_atualizacao_pendencia_projeto.url }}" target="_blank" class="btn btn-sm btn-primary">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% else %}
+								<a href="" target="_blank" class="btn btn-sm btn-primary disabled">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% endif %}
+						</td>
+						<td>
+							{% for c in submissao.get_parecer_comissao %}
+								<a href="{{ c.arquivo_resposta_comissao.url }}" target="_blank" class="btn btn-sm btn-primary">
+									{% bootstrap_icon 'download' %}
+								</a> 
+							{% empty %}
+								<a href="" target="_blank" class="btn btn-sm btn-primary disabled">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% endfor %}
+						</td>
+						<td>
+							{% if submissao.get_segundo_arquivo_parecer_comissao %}
+								<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-primary">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% else %}
+								<a href="" target="_blank" class="btn btn-sm btn-primary disabled">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% endif %}
+						</td>
+						<td class="text-center">
+							{% if submissao.permite_alterar %}
+								{% bootstrap_button content='' href=submissao.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+							{% else %}
+								{% bootstrap_button content='' href='#' button_type='link' icon='edit' button_class='btn btn-primary disabled' size='sm' %}
+							{% endif %}
+					  	</td>
+					  	<td class="text-center">
+							{% if submissao.permite_alterar %}
+								{% bootstrap_button content='' href=submissao.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+							{% else %}
+								{% bootstrap_button content='' href='#' button_type='link' icon='trash' button_class='btn btn-danger disabled' size='sm' %}
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+	  		</tbody>
+			<tfoot>
+				<th>
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

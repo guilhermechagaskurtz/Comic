@@ -1,0 +1,315 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'check' %} Avaliação de  projetos
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h4>
+        <small>Submissão a ser avaliada:</small><br>
+        {{ object.submissao }} {{ submissao }}<br>
+    </h4> 
+    Resumo<br>
+    {{ object.submissao.resumo }} {{ submissao.resumo }}
+  </div>
+</div>
+<form class="form" role="form" method="POST">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+ 
+  <div class="hidden">
+    {% bootstrap_field form.submissao %}
+  </div>
+  {% bootstrap_field form.avaliador_responsavel %}
+  {% bootstrap_field form.avaliador_suplente %}
+  {% bootstrap_field form.dt_limite_avaliacao %}
+
+  <h3>Avaliações</h3>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Avaliador responsável</h3>
+    </div>
+    <div class="panel-body">
+      <p>
+        <strong>Status do parecer:</strong> 
+        {% if object.dt_avaliacao_responsavel %}
+          <span class="label label-success">
+            Parecer enviado em: {{ object.dt_avaliacao_responsavel|date:"d/m/Y H:i" }}
+          </span>
+        {% else %}
+          <span class="label label-warning">
+            Este avaliador ainda não enviou seu parecer
+          </span>
+        {% endif %}
+      </p>
+	
+	    <table class="table table-condensed table-responsive">
+        <thead>
+          <tr>
+            <th>Critérios de avaliação</th><th>Respostas avaliação</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+              <td>{{ form.tem_introducao_responsavel.label }}</td>
+              <td>{{ form.tem_introducao_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_justificativa_responsavel.label }}</td>
+            <td>{{ form.tem_justificativa_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_objetivos_responsavel.label }}</td>
+            <td>{{ form.tem_objetivos_responsavel }}</td>
+          </tr>
+
+          <tr>
+            <th>Metodologia</th>            
+          </tr>
+
+          <tr>
+            <td>{{ form.tem_metodologia_desenho_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_desenho_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_local_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_local_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_amostra_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_amostra_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_inclusao_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_inclusao_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_coleta_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_coleta_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_coleta_instrumento_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_coleta_instrumento_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_etica_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_etica_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_riscos_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_riscos_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_assentimento_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_assentimento_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_consentimento_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_consentimento_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_confidencialidade_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_confidencialidade_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_metodologia_exequivel_estudo_responsavel.label }}</td>
+            <td>{{ form.tem_metodologia_exequivel_estudo_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_cronograma_responsavel.label }}</td>
+            <td>{{ form.tem_cronograma_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_orcamento_responsavel.label }}</td>
+            <td>{{ form.tem_orcamento_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_orcamento_agencia_responsavel.label }}</td>
+            <td>{{ form.tem_orcamento_agencia_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_referencias_responsavel.label }}</td>
+            <td>{{ form.tem_referencias_responsavel }}</td>
+          </tr>
+          <tr>
+            <th>Retorno para instituição de execução</th>            
+          </tr>
+          <tr>
+            <td>{{ form.tem_relevancia_responsavel.label }}</td>
+            <td>{{ form.tem_relevancia_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_assitencia_responsavel.label }}</td>
+            <td>{{ form.tem_assitencia_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_mudanca_responsavel.label }}</td>
+            <td>{{ form.tem_mudanca_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_nova_pratica_assistencial_responsavel.label }}</td>
+            <td>{{ form.tem_nova_pratica_assistencial_responsavel }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.tem_produto_responsavel.label }}</td>
+            <td>{{ form.tem_produto_responsavel }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      {% bootstrap_field form.parecer_avaliador_responsavel %}
+
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Avaliador suplente</h3>
+      </div>
+      <div class="panel-body">
+        <p>
+          <strong>Status do parecer:</strong> 
+          {% if object.dt_avaliacao_suplente %}
+            <span class="label label-success">
+              Parecer enviado em: {{ object.dt_avaliacao_suplente|date:"d/m/Y H:i" }}
+            </span>
+          {% else %}
+            <span class="label label-warning">
+              Este avaliador ainda não enviou seu parecer
+            </span>
+          {% endif %}
+        </p>
+        
+        <table class="table table-condensed table-responsive">
+          <thead>
+            <tr>
+              <th>Critérios de avaliação</th><th>Respostas avaliação</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+                <td>{{ form.tem_introducao_suplente.label }}</td>
+                <td>{{ form.tem_introducao_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_justificativa_suplente.label }}</td>
+              <td>{{ form.tem_justificativa_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_objetivos_suplente.label }}</td>
+              <td>{{ form.tem_objetivos_suplente }}</td>
+            </tr>
+  
+            <tr>
+              <th>Metodologia</th>            
+            </tr>
+  
+            <tr>
+              <td>{{ form.tem_metodologia_desenho_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_desenho_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_local_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_local_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_amostra_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_amostra_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_inclusao_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_inclusao_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_coleta_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_coleta_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_coleta_instrumento_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_coleta_instrumento_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_etica_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_etica_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_riscos_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_riscos_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_assentimento_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_assentimento_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_consentimento_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_consentimento_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_confidencialidade_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_confidencialidade_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_metodologia_exequivel_estudo_suplente.label }}</td>
+              <td>{{ form.tem_metodologia_exequivel_estudo_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_cronograma_suplente.label }}</td>
+              <td>{{ form.tem_cronograma_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_orcamento_suplente.label }}</td>
+              <td>{{ form.tem_orcamento_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_orcamento_agencia_suplente.label }}</td>
+              <td>{{ form.tem_orcamento_agencia_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_referencias_suplente.label }}</td>
+              <td>{{ form.tem_referencias_suplente }}</td>
+            </tr>
+            <tr>
+              <th>Retorno para instituição de execução</th>            
+            </tr>
+            <tr>
+              <td>{{ form.tem_relevancia_suplente.label }}</td>
+              <td>{{ form.tem_relevancia_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_assitencia_suplente.label }}</td>
+              <td>{{ form.tem_assitencia_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_mudanca_suplente.label }}</td>
+              <td>{{ form.tem_mudanca_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_nova_pratica_assistencial_suplente.label }}</td>
+              <td>{{ form.tem_nova_pratica_assistencial_suplente }}</td>
+            </tr>
+            <tr>
+              <td>{{ form.tem_produto_suplente.label }}</td>
+              <td>{{ form.tem_produto_suplente }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {% bootstrap_field form.parecer_avaliador_suplente %}
+
+      </div>
+    </div>
+
+
+  {% buttons submit='Gravar' %}
+    <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
+  {% endbuttons %}
+</form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load bootstrap3 %}
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'appprofessor_home' %}">COMIC</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class=""><a href="{% url 'appprofessor_home' %}"> {% bootstrap_icon 'home' %} Home <span class="sr-only">(current)</span></a></li>
+
+        <li class=""><a href="{% url 'appprofessor_dados_update' pk=user.get_id %}"> {% bootstrap_icon 'user' %} Meus Dados <span class="sr-only">(current)</span></a></li>
+        <li class=""><a href="{% url 'appprofessor_submissao_list' %}"> {% bootstrap_icon 'list-alt' %} Minhas Submissões <span class="sr-only">(current)</span></a></li>
+        <li class=""><a href="{% url 'appprofessor_minha_avaliacao_list' %}"> {% bootstrap_icon 'check' %} Minhas Avaliações <span class="sr-only">(current)</span></a></li>
+        <li class=""><a href="{% url 'appprofessor_documento_list' %}"> {% bootstrap_icon 'book' %} Documentos modelos COMIC <span class="sr-only">(current)</span></a></li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'appprofessor_about' %}">{% bootstrap_icon 'question-sign' %} Sobre</a></li>
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'password_change' %}">Alterar senha</a></li>
+            <li><a href="{% url 'logout' %}?next=/">Sair</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

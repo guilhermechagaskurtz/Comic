@@ -1,0 +1,123 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{% bootstrap_icon 'certificate' %} Pareceres
+{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<h1 style=background-color:Tomato; align='center'> Atenção COMIC</h1>
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+	  <form class="form">
+		  <div class="row">
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				  {% bootstrap_field form.edital  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				  {% bootstrap_field form.titulo  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				{% bootstrap_field form.nome_integrante %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				  <br>
+				  <button type="submit" class="btn btn-success btn-lg"  style="width: 100%;">{% bootstrap_icon 'search' %} Buscar</button>
+			  </div>
+		  </div>
+	  </form>
+	</div>
+  </div>
+	
+	<div class="table-responsive">
+		<table class="table table-hover">
+	  		<thead>
+				<th>Edital</th>  
+				<th>Projeto</th>
+	  			<th>Status Projeto</th>
+				<th>Data geração parecer</th>	
+				<th>Primeiro Parecer</th>
+				<th>Parecer Final</th>	
+	  			<th class="text-center">Editar</th>
+	  			<th class="text-center">Excluir</th>
+	  		</thead>
+	  		<tbody>
+				{% for comissao in object_list %}
+					{% if comissao.get_status_display != 'Aprovado' and comissao.get_status_display != 'Reprovado' and comissao.get_status_display != 'Trancado' and comissao.get_status_display != 'Pendente' and comissao.get_status_display != 'Retirado pelo professor' and comissao.get_status_display != 'Retirado pelo COMIC'%}  
+					<tr>
+						<td>
+							{% if comissao.avaliacao_comissao.submissao.edital %}
+								{{ comissao.avaliacao_comissao.submissao.edital }}
+							{% endif %}
+						</td>
+						<td>
+							{% if comissao.avaliacao_comissao %}
+								{{ comissao.avaliacao_comissao }}
+								<br> 
+								<span class="badge badge-info">
+									Submetido em: {{ comissao.avaliacao_comissao.submissao.dt_cadastro_submissao|date:"d/m/Y" }}
+								</span>
+							{% endif %}
+						</td>
+						<td>
+							{{ comissao.get_status_display|upper }}<br>
+							{% if comissao.dt_trancado %}
+								{{ comissao.dt_trancado|date:'d/m/Y' }}
+							{% endif %}
+						</td>
+						<td>
+							{% if comissao.dt_avaliacao_comissao %}
+								{{ comissao.dt_avaliacao_comissao|date:'d/m/Y' }}
+							{% endif %}
+						</td>
+						<td>
+							<span data-toggle="tooltip" title='Arquivo 1º Parecer COMIC'>
+								{% if comissao.arquivo_parecer_comissao %}
+									<a href="{{ comissao.arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% else %}
+									<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% endif %}
+							</span>
+						</td>
+						<td>
+							<span data-toggle="tooltip" title='Arquivo Parecer Final COMIC'>
+								{% if comissao.arquivo_parecer_comissao_pendencia %}
+									<a href="{{ comissao.arquivo_parecer_comissao_pendencia.url }}" target="_blank" class="btn btn-sm btn-success">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% else %}
+									<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% endif %}
+							</span>
+						</td>
+						<td class="text-center">
+							<span data-toggle="tooltip" title='Editar Parecer COMIC'>
+								{% bootstrap_button content='' href=comissao.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+							</span>
+					  	</td>
+					  	<td class="text-center">
+							<span data-toggle="tooltip" title='Excluir Parecer COMIC'>
+								{% bootstrap_button content='' href=comissao.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+							</span>
+					  	</td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+	  		</tbody>
+			<tfoot>
+				<th>
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

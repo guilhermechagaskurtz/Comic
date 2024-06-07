@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'list-alt' %} Submissão de  projetos
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <h3 class="panel-title">Arquivo corrigido do Projeto pós PENDÊNCIA</h3>
+  </div>
+ 
+<div class="panel-body"> 
+  <form class="form" role="form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table class="table table-condensed table-responsive">
+      <thead>
+        <tr>
+          <th>Descrição</th><th>Resposta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> {{ form.arquivo_atualizacao_pendencia_projeto.label }} </td>
+          <td>{{ form.arquivo_atualizacao_pendencia_projeto }}</td>
+        </tr>
+      </tbody>
+    </table>  
+</div>
+</div>  
+
+<p>
+  <b>ATENÇÃO:</b> Ao gravar o envio, você não terá mais acesso à correção!!!
+</p>
+{% buttons submit='Gravar' %}
+  <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
+{% endbuttons %}
+</form>
+{% endblock %}

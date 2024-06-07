@@ -1,0 +1,53 @@
+{% extends "registration/base.html" %}
+
+{% load bootstrap3 %}
+{% load static %}  
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-md-offset-4">
+		<center>
+		<img src="{% static 'core/img/logoUFN_hor.jpg' %}"
+		      class="img-responsive" style="max-width: 200px;">
+		<br>
+		<img src="{% static 'core/img/SISGEP-MARCA.jpg' %}"
+		      class="img-responsive" style="max-width: 90%;">
+		</center>
+	    <br>
+	    <div class="account-wall">
+	      <form class="form-signin" method="POST">
+	        {% csrf_token %}
+	        {% bootstrap_form form %}
+	        <span class="clearfix"></span>
+	        <p style="text-align:center;">
+	          <button type="submit" class="btn btn-primary btn-small" style="width:100%;">
+	            {% bootstrap_icon 'glyphicon glyphicon-off' %} Entrar
+	          </button>
+	        </p>
+	        <p style="text-align:center;">
+	          <a class="btn btn-primary" style="width:100%;" href="{% url 'usuario_register' %}">{% bootstrap_icon 'glyphicon glyphicon-plus-sign' %} Criar conta</a>
+	        </p>
+	        <p style="text-align:center;">
+	          <a class="btn btn-primary" style="width:100%;" href="{% url 'password_reset' %}">{% bootstrap_icon 'glyphicon glyphicon-flag' %} Resetar senha</a>
+	        </p> 
+			{% comment %} <p style="text-align:center;">
+	                <a class="btn btn-warning" style="width:100%;">Resetar senha interrompido... aguarde!</a>
+			</p>  {% endcomment %}
+	        </form>
+	    </div>
+  		<div class="alert alert-info text-center">
+          	<h4 class="text-center"><small>Laboratório de Práticas da Computação UFN</small></h4>
+        	<p><small>Apoio: CNPq |
+            Parceiros: <a href="http://site.ersistemas.info/" target="_blank"> ER Sistemas</a> |  <a href="http://erclinic.com.br/" target="_blank"> ER Clinic</a><br>
+		    Registro no INPI: BR512021000883-9</small></p>
+      	</div>
+      	<div class="alert alert-warning text-center">
+          	<p><small>É preciso aceitar <a href="https://pt.wikihow.com/Habilitar-Cookies-no-Seu-Navegador-de-Internet" target= "_blank">COOKIES</a> no Navegador.</small></p>
+      	</div>
+      	<br>
+    </div>
+</div>
+
+{% endblock %}

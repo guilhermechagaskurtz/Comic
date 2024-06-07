@@ -1,0 +1,129 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'certificate' %} Parecer do COMIC
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <h3 class="panel-title">Detalhes da submissão</h3>
+  </div>
+  <div class="panel-body">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+              <strong>Título:</strong><br>{{ object.avaliacao_comissao.submissao.titulo }}
+          </div>
+      </div>
+      <br>
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+              <strong>Local execução:</strong><br>{{ object.avaliacao_comissao.submissao.local_execucao }}
+          </div>  
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <strong>Área:</strong><br>{{ object.avaliacao_comissao.submissao.area }}
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <strong>Resumo:</strong>
+              <p class="text-justify">
+                  {{ object.avaliacao_comissao.submissao.resumo }}
+              </p>
+              <strong>Palavras-chave:</strong>
+              <p class="text-justify">
+                {{ object.avaliacao_comissao.submissao.palavras_chave }}
+            </p>
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <strong>Arquivo do projeto:</strong>
+              <p class="text-justify">
+                {% if object.avaliacao_comissao.submissao.arquivo_projeto %} 
+                  <a href="{{ object.avaliacao_comissao.submissao.arquivo_projeto.url }}" target="_blank" class="btn btn-sm btn-primary">
+                    {% bootstrap_icon 'download' %}
+                  </a>
+                {% else %}
+                  <a href="" target="_blank" class="btn btn-sm btn-primary disabled">
+                    {% bootstrap_icon 'download' %}
+                  </a>
+                {% endif %} 
+              </p>
+          
+              <strong>Arquivo de correção do projeto após pendência:</strong>
+              <p class="text-justify">
+              {% if object.avaliacao_comissao.submissao.arquivo_atualizacao_pendencia_projeto %} 
+                <a href="{{ object.avaliacao_comissao.submissao.arquivo_atualizacao_pendencia_projeto.url }}" target="_blank" class="btn btn-sm btn-primary">
+                  {% bootstrap_icon 'download' %}
+                </a>
+              {% else %}
+                <a href="" target="_blank" class="btn btn-sm btn-primary disabled">
+                  {% bootstrap_icon 'download' %}
+                </a>
+              {% endif %} 
+              </p>
+            </div>
+      </div>
+    </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <h3 class="panel-title">Detalhes da avaliação</h3>
+  </div>
+  <div class="panel-body">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+              <strong>Texto do avaliador Responsável:</strong>
+              <br>{{ object.avaliacao_comissao.parecer_avaliador_responsavel }}
+          </div>
+      </div>
+      <br>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+          <strong>Texto do avaliador Suplente:</strong><br>
+          {% if object.avaliacao_comissao.parecer_avaliador_suplente %}
+            {{ object.avaliacao_comissao.parecer_avaliador_suplente }}
+          {% else %}
+            Sem avaliador suplente ou texto não enviado.
+          {% endif %}
+        </div>
+      </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <h3 class="panel-title">Área COMIC</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form" role="form" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% bootstrap_field form.status %}
+      {% bootstrap_field form.arquivo_parecer_comissao %}
+      {% bootstrap_field form.arquivo_parecer_comissao_pendencia %}
+      {% bootstrap_field form.comentario %}
+  </div>
+</div>
+
+<p><b>ATENÇÃO:</b> há dois arquivos que a comissão pode emitir. <br></p>
+  <ol>
+    <li>O primeiro que oferece um parecer inicial e 
+      dá a oportunidade de ajustes se a avaliação ficar no STATUS PENDENTE.</li>
+    <li>O último, que é o arquivo contendo o parecer final à submissão reenviada com
+      correções.</li>
+  </ol> 
+ 
+    {% buttons submit='Gravar' %}
+      <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
+    {% endbuttons %}
+    </form>
+
+{% endblock %}

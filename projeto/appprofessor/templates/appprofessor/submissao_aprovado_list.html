@@ -1,0 +1,79 @@
+{% extends 'appprofessor/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{% bootstrap_icon 'thumbs-up' %} Projetos Aprovados e Ativos
+{% endblock %}
+
+
+{% block content %}
+	
+	<div class="table-responsive">
+		<table class="table table-hover">
+	  		<thead>
+				<th>Edital</th>
+	  			<th>Título</th>
+	  			<th>Responsável</th>
+	  			<th>Colaboradores</th>	  			
+				<th>Projeto final</th>
+				<th>Data última atualização</th>
+				<th class="text-center">Atualizar</th>
+	  		</thead>
+	  		<tbody>
+				  {% for submissao in object_list %}
+				  	{% if submissao.avaliacao.comissao.get_status_display == 'Aprovado' %}
+					  <tr>
+						<td>{{ submissao.edital }}</td>
+						<td><span data-toggle="tooltip" title='{{submissao.titulo}}'>{{ submissao.titulo|truncatechars:50 }}</span></td>
+						<td>
+							{% if submissao.responsavel %}
+								{{ submissao.responsavel }}
+							{% endif %}
+						</td>
+						<td>
+							{% for c in submissao.colaborador.all %}
+								{{ c }}
+								{% if forloop.last %}
+								.
+								{% else %}
+								,
+								{% endif %}
+							{% empty %}
+								<i>Nenhum colaborador informado</i>
+							{% endfor %}
+						</td>
+						
+						<td>
+							<span  data-toggle="tooltip"  title='Arquivo Final do Projeto'>
+							{% if submissao.arquivo_atualizacao_pendencia_projeto %}
+								<a href="{{ submissao.arquivo_atualizacao_pendencia_projeto.url }}" target="_blank" class="btn btn-sm btn-primary">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% else %}
+								<a href="" target="_blank" class="btn btn-sm btn-primary disabled">
+									{% bootstrap_icon 'download' %}
+								</a>
+							{% endif %}
+						</td>
+
+						<td>
+							{{ submissao.dt_atualizacao_submissao|date:"d/m/Y" }}
+						</td>
+						
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Editar submissão'>
+								{% bootstrap_button content='' href=submissao.get_absolute_url_aprovado button_type='link' icon='refresh' button_class='btn btn-primary' size='sm' %}
+							</span>
+						</td>
+					</tr>
+					{% endif%}
+				{% endfor %}
+	  		</tbody>
+			<tfoot>
+				<th>
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'appprofessor/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'list-alt' %} Minha Submissão de projeto
+{% endblock %}
+
+{% block content %}
+<form class="form" role="form" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  {% bootstrap_form form %}
+  {% buttons submit='Gravar' %}
+    <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
+  {% endbuttons %}
+</form>
+{% endblock %}

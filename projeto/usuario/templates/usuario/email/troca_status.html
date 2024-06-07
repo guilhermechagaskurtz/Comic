@@ -1,0 +1,17 @@
+{% extends "mail_templated/base.tpl" %}
+{% load bootstrap3 %}
+
+{% block subject %}
+    {{ usuario.nome }} há projetos no SISGEP-COMIC com status alterado!!!
+{% endblock %}
+
+{% block html %}
+    <p>Olá <strong>{{ usuario.nome }}</strong>!!<br><br>
+
+       Acesse o <a href="https://comic.lapinf.ufn.edu.br" target="_blank">
+       SISGEP-COMIC</a> para verificar projetos com status atualizados que precisam de sua atenção!!</p>
+    <br>
+    <p>***** MENSAGEM GERADA AUTOMATICAMENTE. NÃO RESPONDA. *****</p>
+    <hr>
+    <p><small>Desenvolvido pelo Laboratório de Práticas da Computação UFN</small></p>
+{% endblock %}

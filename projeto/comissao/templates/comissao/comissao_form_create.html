@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'certificate' %} Parecer do COMIC
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h4>
+        <small>Avaliação de projeto que necessita de parecer pelo COMIC:</small><br>
+        {{ object.avaliacao_comissao }} {{ avaliacao_comissao }}
+    </h4> 
+  </div>
+</div>
+<form class="form" role="form" method="POST">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="hidden">
+    {% bootstrap_field form.avaliacao_comissao %}
+  </div>
+  
+
+{% buttons submit='Gravar' %}
+  <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
+{% endbuttons %}
+</form>
+{% endblock %}
